@@ -15,7 +15,7 @@ const state = {
   yearMax: null,
   selectedCountry: null,
   logScale: true,
-  westernOnly: false,
+  hemisphere: 'all',
 };
 
 const metricLabels = {
@@ -25,7 +25,22 @@ const metricLabels = {
   total_length_km: 'Total length (km)'
 };
 
-const westernSet = new Set(['US','UK','CA','AU','NZ']);
+const westernHemisphereCountries = new Set([
+  'US','CA','MX','BR','AR','CL','CO','PE','VE','UY','PY','BO',
+  'EC','CU','DO','CR','PA','GT'
+]);
+
+function matchesHemisphere(project) {
+  if (state.hemisphere === 'all') return true;
+  if (state.hemisphere === 'western') {
+    return westernHemisphereCountries.has(project.country_code);
+  }
+  if (state.hemisphere === 'eastern') {
+    return !westernHemisphereCountries.has(project.country_code);
+  }
+  return true;
+}
+
 
 function fmtMoney(n) {
   if (n == null || Number.isNaN(n)) return '—';
@@ -44,9 +59,9 @@ function matchesYear(project) {
   return true;
 }
 
+
 function projectFilter(project) {
-  if (state.westernOnly && !westernSet.has(project.country_code)) return false;
-  return matchesYear(project);
+  return matchesYear(project) && matchesHemisphere(project);
 }
 
 function filteredProjects() {
@@ -153,7 +168,11 @@ function renderMap(countryData) {
       projection: { type: 'natural earth' },
       showframe: false,
       showcoastlines: false,
-      bgcolor: '#ffffff'
+      showocean: true,
+      oceancolor: '#cfe8ff',
+      showlakes: true,
+      lakecolor: '#cfe8ff',
+      bgcolor: '#dcebff'
     },
     paper_bgcolor: '#ffffff',
     plot_bgcolor: '#ffffff'
@@ -261,7 +280,11 @@ function initControls() {
   document.getElementById('metric-select').addEventListener('change', e => { state.metric = e.target.value; renderAll(); });
   document.getElementById('sort-select').addEventListener('change', e => { state.sort = e.target.value; renderAll(); });
   document.getElementById('log-toggle').addEventListener('change', e => { state.logScale = e.target.checked; renderAll(); });
-  document.getElementById('western-toggle').addEventListener('change', e => { state.westernOnly = e.target.checked; state.selectedCountry = null; renderAll(); });
+  document.getElementById('hemisphere-filter').addEventListener('change', e => {
+  state.hemisphere = e.target.value;
+  state.selectedCountry = null;
+  renderAll();
+});
 }
 
 function renderAll() {
