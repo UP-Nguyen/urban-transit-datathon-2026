@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Why Does Urban Rail Cost So Much?</title>
+  <script src="https://cdn.plot.ly/plotly-2.35.2.min.js"></script>
+    <link rel="stylesheet" href="./styles.css" />
+
+</head>
+<body>
+<div class="page">
+  <section class="hero">
+    <div class="card hero-copy">
+      <div style="font-size:.85rem; text-transform:uppercase; letter-spacing:.08em; color:var(--muted); margin-bottom:12px;">Interactive infrastructure atlas</div>
+      <h1>Why Does Urban Rail Cost So Much?</h1>
+      <div class="subtitle">A world map of 884 rail projects across 59 countries, built from https://ultraviolet.library.nyu.edu/records/9wnjp-kez15.</div>
+      <div class="takeaway">Hover over a country to see its rail-building profile. Click to drill down into cities and projects. The map shows median cost per kilometer in 2023 dollars, while the scatterplot reveals how project length, stations, and alignment interact.</div>
+      <div class="legend-inline">
+        <span class="pill tunnel">Tunnel-heavy projects generally cost more</span>
+        <span class="pill elevated">Elevated projects sit in the middle</span>
+        <span class="pill atgrade">At-grade projects are usually lower-cost</span>
+      </div>
+      <div class="stat-grid" id="headline-stats"></div>
+    </div>
+    <div class="card controls">
+      <div>
+        <h3>Explore the data!</h3>
+        <div class="footer-note">This CSV includes country and city names, but not geographic coordinates for each city. This MVP uses a country map, then drills down to cities and projects in the side panel.</div>
+      </div>
+      <div class="row">
+        <div>
+          <label for="metric-select">Map color metric</label>
+          <select id="metric-select">
+            <option value="median_cost_per_km">Median cost/km</option>
+            <option value="avg_cost_per_km">Average cost/km</option>
+            <option value="projects">Project count</option>
+            <option value="total_length_km">Total length built</option>
+          </select>
+        </div>
+        <div>
+          <label for="sort-select">Project list sort</label>
+          <select id="sort-select">
+            <option value="cost_per_km_desc">Highest cost/km</option>
+            <option value="length_desc">Longest first</option>
+            <option value="year_desc">Newest first</option>
+            <option value="stations_desc">Most stations</option>
+          </select>
+        </div>
+      </div>
+      <div class="row">
+        <div>
+          <label for="year-min">Start year from</label>
+          <input id="year-min" type="number" min="1850" max="2100" step="1" />
+        </div>
+        <div>
+          <label for="year-max">Start year to</label>
+          <input id="year-max" type="number" min="1850" max="2100" step="1" />
+        </div>
+      </div>
+      <div class="checkbox-row">
+        <input id="log-toggle" type="checkbox" checked />
+        <label for="log-toggle" style="margin:0;">Use log scale for project costs</label>
+      </div>
+      <div class="checkbox-row">
+        <input id="western-toggle" type="checkbox" />
+        <label for="western-toggle" style="margin:0;">Highlight projects in western countries only (US, UK, CA, AU, NZ)</label>
+      </div>
+    </div>
+  </section>
+
+  <section class="grid-main">
+    <div class="sidebar" style="grid-column: 1 / span 1;">
+      <div class="card plot-card">
+        <div class="plot-title">
+          <h2>Global rail cost map</h2>
+          <p>Countries are colored by the selected summary metric. Hover for summary stats. Click a country to inspect the cities and projects represented in the dataset.</p>
+        </div>
+        <div id="map"></div>
+      </div>
+      <div class="card plot-card">
+        <div class="plot-title">
+          <h2>Project anatomy</h2>
+          <p>Each dot is a project. Larger dots have more stations. Colors show the dominant alignment by kilometers built.</p>
+        </div>
+        <div id="scatter"></div>
+      </div>
+    </div>
+    <div class="sidebar">
+      <div class="card panel" id="country-panel"></div>
+      <div class="card panel">
+        <h3>How to read this</h3>
+        <div class="footer-note">This app uses <strong>Cost_km_2023_dollars</strong> from https://ultraviolet.library.nyu.edu/records/9wnjp-kez15 and derives a project's dominant alignment from whichever is largest among tunnel, elevated, and at-grade kilometers. Country colors summarize project-level values, so they should be read as a comparative overview rather than a definitive national accounting.</div>
+      </div>
+    </div>
+  </section>
+</div>
+
+<script src="./script.js"></script>
+
+</body>
+</html>
