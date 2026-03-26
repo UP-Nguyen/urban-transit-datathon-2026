@@ -216,14 +216,3 @@ A project may include tunnel, elevated, and at-grade segments, but this visualiz
 ### 5. Project definitions may vary
 The way projects are grouped, phased, or reported may differ across countries and sources.
 
-## Repository structure
-
-├── index.html
-├── styles.css
-├── script.js
-├── data/
-│   ├── Merged-Costs-1-4.csv
-│   └── projects.json
-├── scripts/
-│   └── preprocess_costs.py
-└── README.md
