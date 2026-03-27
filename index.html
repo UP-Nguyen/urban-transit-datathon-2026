@@ -70,10 +70,7 @@
                         <input id="year-max" type="number" min="1850" max="2100" step="1" />
                     </div>
                 </div>
-                <div class="checkbox-row">
-                    <input id="log-toggle" type="checkbox" checked />
-                    <label for="log-toggle" style="margin:0;">Use log scale for project costs</label>
-                </div>
+
                 <div class="control-group">
                     <label for="hemisphere-filter">Hemisphere focus</label>
                     <select id="hemisphere-filter">
@@ -102,6 +99,16 @@
                         <p>Each dot is a project. Larger dots have more stations. Colors show the dominant alignment by
                             kilometers built.</p>
                     </div>
+                <div class="chart-controls">
+                    <label class="checkbox-inline" for="log-toggle">
+                        <input id="log-toggle" type="checkbox" checked />
+                        <span>Make typical projects easier to compare (use log scale so that data isn't suppressed when graphing). </span>
+                    </label>
+                    <div class="helper-text">
+                        Useful when a few very expensive outliers compress the rest of the chart.
+                    </div>
+                </div>
+                    
                     <div id="scatter"></div>
                 </div>
             </div>
