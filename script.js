@@ -18,6 +18,7 @@ const state = {
     hemisphere: 'all',
 };
 
+// Constants to add context for some projects
 const FEATURED_PROJECT_TARGETS = [
     {
         match: p => p.project_name?.includes('East Side Access'),
@@ -44,6 +45,7 @@ const metricLabels = {
     total_length_km: 'Total length (km)'
 };
 
+// To add a new way to view the data
 const westernHemisphereCountries = new Set([
     'US', 'CA', 'MX', 'BR', 'AR', 'CL', 'CO', 'PE', 'VE', 'UY', 'PY', 'BO',
     'EC', 'CU', 'DO', 'CR', 'PA', 'GT'
@@ -54,13 +56,14 @@ function matchesHemisphere(project) {
     if (state.hemisphere === 'western') {
         return westernHemisphereCountries.has(project.country_code);
     }
+    // All countries not in the western hemisphere are in the eastern hemisphere
     if (state.hemisphere === 'eastern') {
         return !westernHemisphereCountries.has(project.country_code);
     }
     return true;
 }
 
-
+// format money
 function fmtMoney(n) {
     if (n == null || Number.isNaN(n)) return '—';
     if (n >= 1000) return '$' + d3fmt(n, 0) + 'M';
@@ -206,6 +209,7 @@ function renderMap(countryData) {
     });
 }
 
+// build the scatter plot
 function renderScatter(projects) {
     const groups = [
         { key: 'Tunnel', color: '#1f3c88' },
@@ -231,6 +235,7 @@ function renderScatter(projects) {
             }
         };
     });
+    // check also for log tog
     const layout = {
         margin: { l: 56, r: 18, t: 8, b: 54 },
         paper_bgcolor: '#ffffff',
@@ -247,6 +252,7 @@ function renderScatter(projects) {
     Plotly.newPlot('scatter', traces, layout, { displayModeBar: false, responsive: true });
 }
 
+// for each selected country, render data 
 function renderCountryPanel(countryData) {
     const panel = document.getElementById('country-panel');
     const selectedCode = state.selectedCountry || (countryData[0] && countryData[0].country_code);
@@ -347,6 +353,7 @@ function renderFeaturedPanel() {
   `;
 }
 
+// initialize and render map
 function initControls() {
     const years = DATA.projects.map(d => d.start_year).filter(Boolean);
     const minYear = Math.min(...years);
