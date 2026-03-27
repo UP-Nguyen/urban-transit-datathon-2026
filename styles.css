@@ -101,6 +101,34 @@ h1 {
     gap: 12px;
 }
 
+.chart-controls {
+    padding: 8px 8px 0;
+    margin-top: 8px;
+}
+
+.checkbox-inline {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    color: var(--ink);
+    font-size: .95rem;
+    font-weight: 500;
+    cursor: pointer;
+}
+
+.checkbox-inline input {
+    width: auto;
+    margin-top: 2px;
+}
+
+.helper-text {
+    margin-left: 28px;
+    margin-top: 4px;
+    color: var(--muted);
+    font-size: .84rem;
+    line-height: 1.45;
+}
+
 .controls h3,
 .panel h3 {
     margin: 0 0 8px;
