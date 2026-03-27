@@ -1,9 +1,8 @@
-# Urban Transit Datathon 2026
+# Urban Transit Data Visualization 2026
 
 # Why Does Urban Rail Cost So Much?
 
 An interactive map-story exploring how urban rail construction costs vary across 884 projects in 59 countries.
-
 
 
 - index.html - page structure
@@ -62,11 +61,10 @@ The visualization is designed around three levels of exploration:
 
 ## Research question
 
-This project investigates three related questions:
+This project investigates two related questions:
 
 - How do rail construction costs compare across countries?
 - What kinds of projects tend to be more expensive?
-- How can curated examples help explain the difference between extreme outliers and more moderate-cost projects?
 
 ## Data source
 
@@ -75,8 +73,9 @@ This project uses the competition dataset:
 **Construction Costs of Urban Rail Projects Worldwide**
 
 Source:
-- NYU Data Services competition dataset
-- Transit Costs Project / merged CSV used in this submission
+Levy, A., Goldwyn, E., Ensari, E., & Chitti, M. (2025). Construction costs of urban rail projects worldwide [Data set]. New York University. https://doi.org/10.58153/9wnjp-kez15
+
+URL: https://ultraviolet.library.nyu.edu/records/9wnjp-kez15
 
 Primary working file:
 - `data/Merged-Costs-1-4.csv`
@@ -86,7 +85,7 @@ Processed output used by the site:
 
 ## Key variables used
 
-The visualization relies primarily on these variables from the dataset:
+The visualization relies primarily on these columns from the dataset:
 
 - `Country`
 - `City`
@@ -137,9 +136,10 @@ Computed from project-level observations for each country:
 ### Data cleaning
 The raw merged CSV was cleaned in Python before being used in the web app.
 
-Processing steps included:
+Processing steps in python included:
+- mapping country names
 - standardizing numeric fields
-- coercing missing values
+- cleaning missing values
 - generating a readable project title
 - deriving dominant alignment
 - selecting only fields needed by the front end
@@ -160,7 +160,7 @@ These were added to help viewers interpret the broader patterns visible in the m
 
 ## Design rationale
 
-This project was designed to balance **accessibility**, **exploration**, and **interpretation**.
+This project was designed to balance **accessibility**, **exploration**, and **interpretation**. I chose to build it with python, javascript, and html/css because those are primary skills that I have, though I considered using ARCGis. 
 
 ### Why a world choropleth map?
 A country-level map gives viewers an immediate global overview and invites exploration. It provides a strong entry point, even for users unfamiliar with transport planning datasets, and users can sense at first glance, intuitively, which countries might be trying to invest more in public transit.
