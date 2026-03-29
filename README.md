@@ -215,3 +215,6 @@ A project may include tunnel, elevated, and at-grade segments, but this visualiz
 
 ### 5. Project definitions may vary
 The way projects are grouped, phased, or reported may differ across countries and sources.
+
+### Use of generative AI 
+The concepts and the logic, data cleaning, and scripting was written by me. AI was used to format and debug a few syntactical errors in script.jx
