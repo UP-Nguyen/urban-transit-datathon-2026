@@ -63,17 +63,19 @@ function matchesHemisphere(project) {
     return true;
 }
 
-// format money
+// Format a numeric cost value as USD millions for display in cards and summaries.
 function fmtMoney(n) {
     if (n == null || Number.isNaN(n)) return '—';
     if (n >= 1000) return '$' + d3fmt(n, 0) + 'M';
     return '$' + d3fmt(n, 0) + 'M';
 }
 
+// Format numbers with a limited number of decimal places for readable UI labels.
 function d3fmt(n, digits = 1) {
     return Number(n).toLocaleString(undefined, { maximumFractionDigits: digits, minimumFractionDigits: 0 });
 }
 
+// helper for year filter
 function matchesYear(project) {
     const y = project.start_year;
     if (state.yearMin != null && y != null && y < state.yearMin) return false;
@@ -90,6 +92,7 @@ function filteredProjects() {
     return DATA.projects.filter(projectFilter);
 }
 
+// Recompute country-level summary statistics from the currently filtered projects.
 function recomputeCountries() {
     const grouped = new Map();
     for (const p of filteredProjects()) {
@@ -143,6 +146,7 @@ function sortProjects(projects) {
     return arr;
 }
 
+
 function dominantPillClass(alignment) {
     if (alignment === 'Tunnel') return 'tunnel';
     if (alignment === 'Elevated') return 'elevated';
@@ -150,6 +154,7 @@ function dominantPillClass(alignment) {
     return '';
 }
 
+// Render the headline summary cards at the top of the page for the current filter view.
 function renderHeadlineStats(countryData) {
     const costVals = filteredProjects().map(d => d.cost_per_km).filter(v => v != null).sort((a, b) => a - b);
     const median = costVals.length ? (costVals.length % 2 ? costVals[(costVals.length - 1) / 2] : (costVals[costVals.length / 2 - 1] + costVals[costVals.length / 2]) / 2) : null;
